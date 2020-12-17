@@ -3,7 +3,7 @@ const listRoutes = require("./list.routes");
 
 
 
-router.use("/list", listRoutes);
+router.use("/", listRoutes);
 
 
 
