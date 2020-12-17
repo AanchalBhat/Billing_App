@@ -3,7 +3,7 @@ dotenv.config()
 
 const app  = require("./src/app")
 const DBM = require("./src/config/db")
-const apiRoutes = require('./src/routes')
+const apiRoutes = require('./src/routes/index')
 
 const port = 8000
 
