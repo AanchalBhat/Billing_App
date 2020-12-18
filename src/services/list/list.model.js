@@ -5,10 +5,10 @@ var listSchema = mongoose.Schema({
     type: String,
   },
   quantity: {
-    type: String,
+    type: Number,
   },
   rate: {
-    type: Number,
+    type: String,
   },
   product_name: {
     type: String,
