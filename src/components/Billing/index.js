@@ -53,11 +53,11 @@ const Billing = (props) => {
         }
       });
     };
+    
+    }
     if (searchData.length > 0) {
       return <BillingDetails show={searchData} />;
     }
-    }
-    
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

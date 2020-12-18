@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from '../components/Login'
 import Dashboard from '../components/Dashboard'
-import Billing from '../components/Billing'
+import Billing from '../components/Billing/index'
 import Invoice from '../components/Invoice'
 
 export const routes = [
