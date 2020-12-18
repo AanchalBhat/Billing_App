@@ -38,23 +38,26 @@ const Billing = (props) => {
   const [searchData, setSearch] = useState([]);
   const handleSubmit = () => {
     if (!pid && !pname) alert("please enter one field");
-    let data = "";
-    if (pid) {
-      data = pid;
-    } else {
-      data = pname;
-    }
-    Axios.get("/list/search", { params: { product: data } }).then((res) => {
-      if (res.data.status) {
-        console.log("hell", res.data.data);
-
-        setSearch(res.data.data);
+    else{
+      let data = "";
+      if (pid) {
+        data = pid;
+      } else {
+        data = pname;
       }
-    });
-  };
-  if (searchData.length > 0) {
-    return <BillingDetails show={searchData} />;
-  }
+      Axios.get("/list/search", { params: { product: data } }).then((res) => {
+        if (res.data.status) {
+          console.log("hell", res.data.data);
+  
+          setSearch(res.data.data);
+        }
+      });
+    };
+    if (searchData.length > 0) {
+      return <BillingDetails show={searchData} />;
+    }
+    }
+    
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
