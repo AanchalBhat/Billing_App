@@ -8,6 +8,8 @@ import { useHistory } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { Axios } from "../../utils/axios";
+import BillingDetails from "./details";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -29,56 +31,55 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = (props) => {
+const Billing = (props) => {
   const classes = useStyles();
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const history = useHistory();
-  const handleSubmit = (e) => {
-    if (name && password) {
-      const userInfo = { name: name, password: password };
-      window.localStorage.setItem("login", JSON.stringify(userInfo));
-      history.push("/dashboard");
+  const [pid, setPid] = useState("");
+  const [pname, setPname] = useState("");
+  const [searchData, setSearch] = useState([]);
+  const handleSubmit = () => {
+    if (!pid && !pname) alert("please enter one field");
+    let data = "";
+    if (pid) {
+      data = pid;
     } else {
-      alert("Fill the inputs");
+      data = pname;
     }
+    Axios.get("/list/search", { params: { product: data } }).then((res) => {
+      if (res.data.status) {
+        console.log("hell", res.data.data);
+
+        setSearch(res.data.data);
+      }
+    });
   };
+  if (searchData.length > 0) {
+    return <BillingDetails show={searchData} />;
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <h1>Billing Counter App</h1>
         <Typography component="h4" variant="h5">
-          Login Page
+          Search Product
         </Typography>
         <form className={classes.form}>
           <TextField
-            variant="outlined"
             margin="normal"
-            required
             fullWidth
             id="name"
-            label="Username"
-            name="name"
-            autoComplete="name"
-            autoFocus
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            label="product ID"
+            value={pid}
+            onChange={(e) => setPid(e.target.value)}
           />
           <TextField
-            variant="outlined"
             margin="normal"
-            required
             fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="pname"
+            label="Product Name"
+            value={pname}
+            onChange={(e) => setPname(e.target.value)}
           />
-
           <Button
             type="button"
             fullWidth
@@ -87,12 +88,11 @@ const Login = (props) => {
             onClick={handleSubmit}
             className={classes.submit}
           >
-            Login
+            Search
           </Button>
         </form>
       </div>
     </Container>
   );
 };
-
-export default Login;
+export default Billing;

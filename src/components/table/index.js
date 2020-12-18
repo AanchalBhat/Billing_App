@@ -23,7 +23,7 @@ const CustomTable = (props) => {
     setTimeout(() => {
       window.document
         .querySelector(".MuiPaper-root.MuiAppBar-root")
-        .scrollIntoView();
+        // .scrollIntoView();
     }, 0);
   };
 
@@ -35,7 +35,7 @@ const CustomTable = (props) => {
 
   return (
     <MaterialTable
-      style={{ margin: "10px 0px" }}
+      style={{ marginLeft: "196px",width:'80%' }}
       icons={tableIcons}
       title={title}
       columns={columns}

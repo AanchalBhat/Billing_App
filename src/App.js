@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { RootNavigator } from "./routes/RootNavigator";
 import "./App.css";
+import Navbar from '../src/components/Dashboard/navbar'
 
 
 class App extends Component {
@@ -12,8 +13,10 @@ class App extends Component {
     
       <>
       
-     
+    
           <BrowserRouter>
+          
+          <Navbar/>
             <RootNavigator />
           </BrowserRouter>
 
