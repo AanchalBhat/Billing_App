@@ -5,6 +5,9 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Axios } from "../../utils/axios";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { invoice_data } from "../../redux/actions/auth";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -30,7 +33,7 @@ const BillingDetails = (props) => {
   const { show } = props;
   const classes = useStyles();
   const [quant, setQuantity] = useState("");
-  const history = useHistory()
+  const history = useHistory();
   const handleSubmit = () => {
     let data = {
       product_id: show[0].product_id,
@@ -39,8 +42,16 @@ const BillingDetails = (props) => {
 
     Axios.patch("/list/update", data).then((res) => {
       if (res.data.status) {
-        console.log("res", res.data.data);
-        history.push('/invoice')
+        console.log("res", show[0].rate.replace("$", "") * 2);
+
+        const data = {
+          product_id: show[0].product_id,
+          quantity: quant,
+          product_name: show[0].product_name,
+          amount: "$" + show[0].rate.replace("$", "") * quant,
+        };
+        props.invoice_data(data);
+        history.push("/invoice");
       }
     });
   };
@@ -98,4 +109,7 @@ const BillingDetails = (props) => {
     </Container>
   );
 };
-export default BillingDetails;
+BillingDetails.propTypes = {
+  invoice_data: PropTypes.func.isRequired,
+};
+export default connect(null, { invoice_data })(BillingDetails);
